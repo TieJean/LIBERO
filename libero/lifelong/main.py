@@ -167,8 +167,8 @@ def main(hydra_cfg):
             sys.exit(0)
 
     print(f"[info] start lifelong learning with algo {cfg.lifelong.algo}")
-    GFLOPs, MParams = compute_flops(algo, datasets[0], cfg)
-    print(f"[info] policy has {GFLOPs:.1f} GFLOPs and {MParams:.1f} MParams\n")
+    # GFLOPs, MParams = compute_flops(algo, datasets[0], cfg)
+    # print(f"[info] policy has {GFLOPs:.1f} GFLOPs and {MParams:.1f} MParams\n")
 
     # save the experiment config file, so we can resume or replay later
     with open(os.path.join(cfg.experiment_dir, "config.json"), "w") as f:
