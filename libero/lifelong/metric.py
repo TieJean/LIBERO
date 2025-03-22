@@ -131,8 +131,11 @@ def evaluate_one_task_success(
                 steps += 1
 
                 data = raw_obs_to_tensor_obs(obs, task_emb, cfg)
-                actions = algo.policy.get_action(data)
-
+                if hasattr(algo, "policy"):
+                    actions = algo.policy.get_action(data)
+                else:
+                    actions = algo.get_action(data)
+                
                 obs, reward, done, info = env.step(actions)
 
                 # record the sim states for replay purpose
