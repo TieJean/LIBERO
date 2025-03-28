@@ -270,7 +270,11 @@ class BCTransformerPolicy(BasePolicy):
         # 3. encode image
         for img_name in self.image_encoders.keys():
             x = data["obs"][img_name]
-            B, T, C, H, W = x.shape
+            if x.shape[-1] == 3:
+                B, T, H, W, C = x.shape
+            else:
+                B, T, C, H, W = x.shape
+            assert C == 3
             img_encoded = self.image_encoders[img_name]["encoder"](
                 x.reshape(B * T, C, H, W),
                 langs=data["task_emb"]
