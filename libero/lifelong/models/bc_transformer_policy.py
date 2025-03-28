@@ -271,9 +271,8 @@ class BCTransformerPolicy(BasePolicy):
         for img_name in self.image_encoders.keys():
             x = data["obs"][img_name]
             if x.shape[-1] == 3:
-                B, T, H, W, C = x.shape
-            else:
-                B, T, C, H, W = x.shape
+                x.permute(0, 1, 4, 2, 3)
+            B, T, C, H, W = x.shape
             assert C == 3
             img_encoded = self.image_encoders[img_name]["encoder"](
                 x.reshape(B * T, C, H, W),

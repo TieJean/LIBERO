@@ -118,9 +118,7 @@ class BCRWLAPolicy(BasePolicy):
         for img_name in self.image_encoders.keys():
             x = data["obs"][img_name]
             if x.shape[-1] == 3:
-                B, T, H, W, C = x.shape
-            else:
-                B, T, C, H, W = x.shape
+                x = x.permute(0, 1, 4, 2, 3)
             B, T, C, H, W = x.shape
             img_encoded = self.image_encoders[img_name]["encoder"](x).view(B, T, 1, -1)
             encoded.append(img_encoded)
