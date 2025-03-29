@@ -13,7 +13,7 @@ train:
   checkpoint_interval: 5
 
 seed: 10000
-use_wandb: false
+use_wandb: true
 wandb_project: "rwla"
 folder: null # use default path
 bddl_folder: "/home/tiejean/Workspace/TaskAgonosticManipulation/LIBERO/libero/libero/bddl_files"

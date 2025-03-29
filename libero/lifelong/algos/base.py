@@ -159,6 +159,8 @@ class Sequential(nn.Module, metaclass=AlgoMeta):
         task_emb = benchmark.get_task_emb(task_id)
 
         # start training
+        import math
+        best_training_loss = math.inf
         for epoch in range(0, self.cfg.train.n_epochs + 1):
 
             t0 = time.time()
@@ -178,6 +180,7 @@ class Sequential(nn.Module, metaclass=AlgoMeta):
                 training_loss /= len(train_dataloader)
             t1 = time.time()
 
+            best_training_loss = min(best_training_loss, training_loss)
             print(
                 f"[info] Epoch: {epoch:3d} | train loss: {training_loss:5.2f} | time: {(t1-t0)/60:4.2f}"
             )
@@ -224,6 +227,15 @@ class Sequential(nn.Module, metaclass=AlgoMeta):
                     + f"| succ. AoC {tmp_successes.sum()/cumulated_counter:4.2f} | time: {(t1-t0)/60:4.2f}",
                     flush=True,
                 )
+                
+                if self.cfg.use_wandb:
+                    import wandb
+                    wandb.log({"epoch": epoch, 
+                        "loss": training_loss, 
+                        "best loss": best_training_loss,
+                        "success rates": success_rate,
+                        "best success rates": prev_success_rate,
+                        "learning_rate": self.scheduler.get_last_lr()[0]})
 
             if self.scheduler is not None and epoch > 0:
                 self.scheduler.step()
