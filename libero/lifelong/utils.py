@@ -216,5 +216,9 @@ def get_task_embs(cfg, descriptions):
             return_tensors="pt",  # ask the function to return PyTorch tensors
         )
         task_embs = model(**tokens)["pooler_output"].detach()
+    elif cfg.task_embedding_format == "sentence-similarity":
+        from rwla.models import LanguageEncoder
+        encoder = LanguageEncoder()
+        task_embs = encoder(descriptions).detach()
     cfg.policy.language_encoder.network_kwargs.input_size = task_embs.shape[-1]
     return task_embs

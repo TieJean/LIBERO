@@ -15,6 +15,6 @@ defaults:
     - data_augmentation@color_aug: batch_wise_img_color_jitter_group_aug.yaml
     - data_augmentation@translation_aug: translation_aug.yaml
     - image_encoder: resnet_encoder.yaml
-    - language_encoder: mlp_encoder.yaml
+    - language_encoder: mlp_sentence_similarity_encoder.yaml
     - position_encoding@temporal_position_encoding: sinusoidal_position_encoding.yaml
     - policy_head: gmm_head.yaml
