@@ -143,6 +143,7 @@ class Sequential(nn.Module, metaclass=AlgoMeta):
             num_workers=self.cfg.train.num_workers,
             sampler=RandomSampler(dataset),
             persistent_workers=True,
+            pin_memory=True
         )
 
         prev_success_rate = -1.0

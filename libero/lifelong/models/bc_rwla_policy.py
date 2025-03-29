@@ -42,9 +42,6 @@ class BCRWLAPolicy(BasePolicy):
                     "input_shape": shape_meta["all_shapes"][name],
                     "encoder": VisualEncoder(device="cuda:0"),
                 }
-        self.encoders = nn.ModuleList(
-            [x["encoder"] for x in self.image_encoders.values()]
-        )
 
         ### 2. encode language
         policy_cfg.language_encoder.network_kwargs.output_size = embed_size
@@ -102,8 +99,6 @@ class BCRWLAPolicy(BasePolicy):
 
     def spatial_encode(self, data):
         # 1. encode extra
-        data["obs"]["gripper_states"] = data["obs"]["gripper_states"].float()
-        data["obs"]["joint_states"] = data["obs"]["joint_states"].float()
         extra = self.extra_encoder(data["obs"])  # (B, T, num_extra, E)
 
         # 2. encode language, treat it as action token
