@@ -126,6 +126,22 @@ class Sequential(nn.Module, metaclass=AlgoMeta):
         return loss.item()
 
     def learn_one_task(self, dataset, task_id, benchmark, result_summary):
+        # task = benchmark.get_task(task_id)
+        # task_emb = benchmark.get_task_emb(task_id)
+        # sim_states = (
+        #     result_summary[task_str] if self.cfg.eval.save_sim_states else None
+        # )
+
+        # success_rate = evaluate_one_task_success(
+        #             cfg=self.cfg,
+        #             algo=self,
+        #             task=task,
+        #             task_emb=task_emb,
+        #             task_id=task_id,
+        #             sim_states=sim_states,
+        #             task_str="",
+        #         )
+        # import pdb; pdb.set_trace()
 
         self.start_task(task_id)
 

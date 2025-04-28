@@ -1,13 +1,14 @@
 # @package _global_
 
+
 defaults:
-  - _self_
-  - data: default
-  - policy: bc_rwla_policy
-  - train: default
-  - eval: default
-  - lifelong: base
-  - test: null
+ - _self_
+ - data: default
+ - policy: bc_rwla_policy
+ - train: default
+ - eval: default
+ - lifelong: base
+ - test: null
 
 seed: 10000
 use_wandb: true
@@ -17,6 +18,7 @@ bddl_folder: "/mnt/data/adityas/CS395TRobotManipulationSp25/LIBERO/libero/libero
 init_states_folder: "/mnt/data/adityas/CS395TRobotManipulationSp25/LIBERO/libero/libero/init_files" # use default path
 load_previous_model: false
 device: "cuda"
+device_id: 0
 device_id: 0
 task_embedding_format: "sentence-similarity"
 task_embedding_one_hot_offset: 1
