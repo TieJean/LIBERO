@@ -255,9 +255,10 @@ class PackNet(Sequential):
             os.path.join(self.experiment_dir, "tmp_model.pth"),
             cfg=self.cfg,
         )
+        from libero.libero.benchmark import get_benchmark
         eval_algo = safe_device(
             eval(self.cfg.lifelong.algo)(
-                eval(self.cfg.benchmark_name)().n_tasks, self.cfg
+                get_benchmark(self.cfg.benchmark_name)(self.cfg.data.task_order_index).n_tasks, self.cfg
             ),
             self.cfg.device,
         )

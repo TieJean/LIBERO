@@ -34,7 +34,7 @@ from libero.lifelong.utils import (
 )
 
 
-@hydra.main(config_path="../configs", config_name="config_rwla", version_base=None)
+@hydra.main(config_path="../configs", config_name="config", version_base=None)
 def main(hydra_cfg):
     # preprocessing
     yaml_config = OmegaConf.to_yaml(hydra_cfg)
@@ -247,7 +247,7 @@ def main(hydra_cfg):
                     ]
                     wandb.run.summary["fwd_transfer_success"] = result_summary["S_fwd"]
                     wandb.run.summary["fwd_transfer_loss"] = result_summary["L_fwd"]
-                    wandb.run.summary.update()
+                    # wandb.run.summary.update()
 
                 print(
                     f"[info] train time (min) {(t1-t0)/60:.1f} "
