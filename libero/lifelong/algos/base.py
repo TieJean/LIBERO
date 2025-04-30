@@ -323,6 +323,7 @@ class Sequential(nn.Module, metaclass=AlgoMeta):
         import math
         best_training_loss = math.inf
         for epoch in range(0, self.cfg.train.n_epochs + 1):
+        # for epoch in range(0, 2):
             t0 = time.time()
 
             if epoch > 0:  # update
@@ -343,7 +344,7 @@ class Sequential(nn.Module, metaclass=AlgoMeta):
                             replay_batch = memory.get_replay_batch(
                                 batch_size=min(replay_batch_size, memory.get_memory_size())
                             )
-                            
+                            # import pdb; pdb.set_trace()
                             if len(replay_batch) > 0:
                                 replay_data = {}
                                 
@@ -360,6 +361,7 @@ class Sequential(nn.Module, metaclass=AlgoMeta):
                                 replay_data["obs"] = replay_obs
                                 
                                 actions = []
+                                task_embs = []
                                 language = []
                                 for demo in replay_batch:
                                     if "actions" in demo:
@@ -367,6 +369,9 @@ class Sequential(nn.Module, metaclass=AlgoMeta):
                                     if "language_description" in demo:
                                         language.append(demo["language_description"])
                                 
+                                task_embs = [demo["task_emb"] for demo in replay_batch if "task_emb" in demo]
+                                if task_embs:
+                                    replay_data["task_emb"] = torch.stack(task_embs).to(self.cfg.device)
                                 if actions:
                                     replay_data["actions"] = torch.stack(actions).to(self.cfg.device)
                                 if language:
